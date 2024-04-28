@@ -5,7 +5,7 @@ import RecentTrans from "./components/Dashboard/RecentTrans";
 
 export default function Home() {
   return (
-    <main className="flex gap-5 flex-col items-center p-5 justify-center text-[#f9f9fc]">
+    <main className="flex gap-5 flex-col items-center p-5 justify-center ">
      
 
     <BalaceCard/>
