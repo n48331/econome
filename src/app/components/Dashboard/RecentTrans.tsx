@@ -11,10 +11,18 @@ const data = [
     {
         id: 2,
         name: 'Water',
-        amount: '3467',
+        amount: '168',
         type: 'expense',
         user: 'Shameer',
         image: '/docs/images/people/profile-picture-3.jpg',
+    },
+    {
+        id: 6,
+        name: 'Sale',
+        amount: '320',
+        type: 'income',
+        user: 'Nabeel',
+        image: '/docs/images/people/profile-picture-1.jpg',
     },
     {
         id: 3,
@@ -27,7 +35,7 @@ const data = [
     {
         id: 4,
         name: 'Sale',
-        amount: '320',
+        amount: '1220',
         type: 'income',
         user: 'Nabeel',
         image: '/docs/images/people/profile-picture-1.jpg',
@@ -35,19 +43,12 @@ const data = [
     {
         id: 5,
         name: 'Sale',
-        amount: '320',
+        amount: '920',
         type: 'income',
         user: 'Nabeel',
         image: '/docs/images/people/profile-picture-1.jpg',
     },
-    {
-        id: 6,
-        name: 'Sale',
-        amount: '320',
-        type: 'income',
-        user: 'Nabeel',
-        image: '/docs/images/people/profile-picture-1.jpg',
-    },
+    
 
 
 ];
@@ -78,8 +79,8 @@ const RecentTrans = () => {
                          {item.user}
                      </p>
                  </div>
-                 <div className={`inline-flex items-center text-base font-semibold text-[${item.type === 'expense' ? '#d65c5c' : '#5cd65c'}]`}>
-                {item.type === 'expense' ? '-$' : '$'}{item.amount}
+                 <div className="inline-flex items-center text-base font-semibold" style={{ color: item.type === 'expense' ? '#d65c5c' : '#5cd65c' }}>
+                {item.type === 'expense' ? '-₹' : '₹'}{item.amount}
                  </div>
              </div>
          </li>
