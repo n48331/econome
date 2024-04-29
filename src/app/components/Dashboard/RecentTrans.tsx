@@ -1,58 +1,6 @@
 
-const data = [
-    {
-        id: 1,
-        name: 'Food',
-        amount: '320',
-        type: 'expense',
-        user: 'Nabeel',
-        image: '/docs/images/people/profile-picture-1.jpg',
-    },
-    {
-        id: 2,
-        name: 'Water',
-        amount: '168',
-        type: 'expense',
-        user: 'Shameer',
-        image: '/docs/images/people/profile-picture-3.jpg',
-    },
-    {
-        id: 6,
-        name: 'Sale',
-        amount: '320',
-        type: 'income',
-        user: 'Nabeel',
-        image: '/docs/images/people/profile-picture-1.jpg',
-    },
-    {
-        id: 3,
-        name: 'Chicken',
-        amount: '67',
-        type: 'expense',
-        user: 'Ashraf',
-        image: '/docs/images/people/profile-picture-2.jpg',
-    },
-    {
-        id: 4,
-        name: 'Sale',
-        amount: '1220',
-        type: 'income',
-        user: 'Nabeel',
-        image: '/docs/images/people/profile-picture-1.jpg',
-    },
-    {
-        id: 5,
-        name: 'Sale',
-        amount: '920',
-        type: 'income',
-        user: 'Nabeel',
-        image: '/docs/images/people/profile-picture-1.jpg',
-    },
-    
 
-
-];
-const RecentTrans = () => {
+const RecentTrans = ({data}:any) => {
     return (
        
 
@@ -65,7 +13,7 @@ const RecentTrans = () => {
    </div>
    <div className="flow-root">
         <ul role="list" className="divide-y divide-gray-200 dark:divide-gray-700">
-           {data.map((item, index) => (
+           {data?.map((item:any, index:any) => (
              <li className="py-3 sm:py-4" key={index}>
              <div className="flex items-center">
                  <div className="flex-shrink-0">
@@ -79,8 +27,8 @@ const RecentTrans = () => {
                          {item.user}
                      </p>
                  </div>
-                 <div className="inline-flex items-center text-base font-semibold" style={{ color: item.type === 'expense' ? '#d65c5c' : '#5cd65c' }}>
-                {item.type === 'expense' ? '-₹' : '₹'}{item.amount}
+                 <div className="inline-flex items-center text-base font-semibold" style={{ color: item.type === 'Expense' ? '#d65c5c' : '#5cd65c' }}>
+                {item.type === 'Expense' ? '-₹' : '₹'}{Number(item.amount)}
                  </div>
              </div>
          </li>
