@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import { IoClose } from "react-icons/io5";
 const AddTask = ({ isModalOpen, setIsModalOpen,title ,formData, setFormData,handleAddTransaction}: any) => {
 
@@ -10,11 +9,10 @@ const AddTask = ({ isModalOpen, setIsModalOpen,title ,formData, setFormData,hand
         setFormData((prevFormData:any) => ({
             ...prevFormData,
             [name]: value,
-            type: title,
         }));
     };
 
-    const addTask = () => {
+    const handleSubmit = () => {
 
         if (formData.name === "" || formData.amount === 0) {
             alert("Please fill all the fields");
@@ -36,13 +34,13 @@ const AddTask = ({ isModalOpen, setIsModalOpen,title ,formData, setFormData,hand
                     <div style={{backgroundColor: title=='Deposited' ? '#efdac7':'#b1d1d8'}} className="mt-5 bg-white rounded-lg shadow p-5 w-3/4 relative">
                     <span onClick={closeModal} className=" absolute right-1 top-1 text-[35px]"><IoClose/></span>
                         <h2 className="font-bold py-3">Add {title}</h2>
-                        <form className="flex flex-col gap-2">
+                        <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
                             <input
                                 className="text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base   transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200  focus:border-blueGray-500 dark:focus:text-white focus:bg-white dark:focus:bg-gray-800 focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400"
                                 type="text"
-                                name="name"
+                                name="Name"
                                 placeholder={`${title} description`}
-                                value={formData.name}
+                                value={formData.Name}
                                 onChange={handleInputChange}
                                 required
                             />
@@ -52,22 +50,21 @@ const AddTask = ({ isModalOpen, setIsModalOpen,title ,formData, setFormData,hand
                             <input
                                  className="text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base   transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200  focus:border-blueGray-500 dark:focus:text-white focus:bg-white dark:focus:bg-gray-800 focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400"
                                 type="date"
-                                name="dueDate"
+                                name="Date"
                                 placeholder="Task Due Date"
-                                value={formData.date}
+                                value={formData.Date}
                                 onChange={handleInputChange}
-                                defaultValue={new Date().toISOString().split('T')[0]}
                             />
                             <input
                                  className="text-black placeholder-gray-600 w-full px-4 py-2.5 mt-2 text-base   transition duration-500 ease-in-out transform border-transparent rounded-lg bg-gray-200  focus:border-blueGray-500 dark:focus:text-white focus:bg-white dark:focus:bg-gray-800 focus:outline-none focus:shadow-outline focus:ring-2 ring-offset-current ring-offset-2 ring-gray-400"
                                 type="number"
-                                name="amount"
+                                name="Amount"
                                 placeholder="Amount"
-                                value={formData.amount}
+                                value={formData.Amount}
                                 onChange={handleInputChange}
                             />
 
-                            <button onClick={addTask} type="button" className="relative w-full flex justify-center items-center px-5 py-2.5 font-medium tracking-wide text-white capitalize   bg-black rounded-md hover:bg-gray-900  focus:outline-none   transition duration-300 transform active:scale-95 ease-in-out">
+                            <button  type="submit" className="relative w-full flex justify-center items-center px-5 py-2.5 font-medium tracking-wide text-white capitalize   bg-black rounded-md hover:bg-gray-900  focus:outline-none   transition duration-300 transform active:scale-95 ease-in-out">
                                 <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF">
                                     <g>
                                         <rect fill="none" height="24" width="24"></rect>

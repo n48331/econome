@@ -4,80 +4,67 @@ import Popup from "./components/common/Popup";
 import ActionCard from "./components/Dashboard/ActionCard";
 import BalaceCard from "./components/Dashboard/BalaceCard";
 import RecentTrans from "./components/Dashboard/RecentTrans";
-import { getData } from "@/api/sheets";
+import { getData, postData } from "@/api/sheets";
+
 
 export default function Home() {
   const [isIncomeModalOpen, setIsIncomeModalOpen] = useState(false);
   const [isExpenseModalOpen, setIsExpenseModalOpen] = useState(false);
-  const [totals, setTotals] = useState({
-    income: 0,
-    expense: 0,
-  });
-  const [formData, setFormData] = useState({
-    id: 0,
-    name: "",
-    username: "Nabeel",
-    amount: 0,
-    type: "",
-    date: new Date().toISOString().split("T")[0],
-    image: "/docs/images/people/profile-picture-1.jpg",
-  });
+  const [loading , setLoading] = useState(true);
+
   const [data, setData] = useState<any>([]);
-  const [isLoading, setIsLoading] = useState(true); // New state variable for loading
+  const [formData, setFormData] = useState({
+    Name: "",
+    Amount: 0,
+    Date: new Date().toISOString().split("T")[0],
+  });
 
   useEffect(() => {
     getData().then((res) => {
       setData(res);
-      setIsLoading(false); // Set loading state to false once data is fetched
+      setLoading(false);
     });
   }, []);
 
-  const handleAddTransaction = () => {
+  const handleAddTransaction = async () => {
     const newTransaction = {
-      id: data.length + 1,
-      name: formData.name,
-      amount: formData.amount,
-      type: formData.type,
-      user: formData.username,
-      image: formData.image,
+      name: formData.Name,
+      amount: formData.Amount,
+      date: formData.Date,
     };
+    postData(newTransaction.name, newTransaction.amount, newTransaction.date);
 
-    setData([...data, newTransaction]);
+    // setData([...data, newTransaction]);
     setFormData({
-      id: 0,
-      name: "",
-      username: "Nabeel",
-      amount: 0,
-      type: "",
-      date: new Date().toISOString().split("T")[0],
-      image: "/docs/images/people/profile-picture-1.jpg",
+      Name: "",
+      Amount: 0,
+      Date: new Date().toISOString().split("T")[0],
     });
+
   };
 
   return (
     <main className="flex gap-5 flex-col items-center p-5 justify-center ">
-      {isLoading ? (
-        <div>Loading...</div> // Show loading state
-      ) : (
-        <>
-          <Popup
-            isModalOpen={isIncomeModalOpen || isExpenseModalOpen}
-            setIsModalOpen={isIncomeModalOpen ? setIsIncomeModalOpen : setIsExpenseModalOpen}
-            title={isIncomeModalOpen ? "Transfer" : "Deposited"}
-            formData={formData}
-            setFormData={setFormData}
-            handleAddTransaction={handleAddTransaction}
-          />
-          <BalaceCard balance={data.balance} count={data.trans} />
-          <div className="flex gap-5 justify-between w-full">
-            <ActionCard title="Transfer" amount={data.total} icon="💰" onClick={() => setIsIncomeModalOpen(true)} color={"b1d1d8"} />
-            <ActionCard title="Deposited" amount={data.deposited} icon="💰" onClick={() => setIsExpenseModalOpen(true)} color={"efdac7"} />
-          </div>
-          <div className="w-full">
-            <RecentTrans data={data.transData?.slice().reverse()} />
-          </div>
-        </>
-      )}
+
+      <>
+        <Popup
+          isModalOpen={isIncomeModalOpen || isExpenseModalOpen}
+          setIsModalOpen={isIncomeModalOpen ? setIsIncomeModalOpen : setIsExpenseModalOpen}
+          title={isIncomeModalOpen ? "Transfer" : "Deposited"}
+          formData={formData}
+          setFormData={setFormData}
+          handleAddTransaction={handleAddTransaction}
+        />
+        <BalaceCard balance={data.balance} count={data.trans} />
+        <div className="flex gap-5 justify-between w-full">
+          <ActionCard title="Transfered" amount={data.total} icon="💰" onClick={() => setIsIncomeModalOpen(true)} color={"b1d1d8"} />
+          <ActionCard title="Deposited" amount={data.deposited} icon="💰" onClick={() => setIsExpenseModalOpen(true)} color={"efdac7"} />
+        </div>
+        <div className="w-full">
+          <RecentTrans data={data.transData?.slice().reverse()} limit={10} title={'Recent transactions'} />
+        </div>
+      </>
+
     </main>
   );
 }

@@ -10,9 +10,9 @@ const ActionCard = ({ title, icon, onClick ,color,amount}:any) => {
         <span >
             <h5 className="mb-2 text-2xl font-semibold tracking-tight ">₹{amount}</h5>
         </span>
-        <span className=" absolute right-2 bottom-2 text-4xl" onClick={onClick}>
+        {/* <span className=" absolute right-2 bottom-2 text-4xl" onClick={onClick}>
         <AiOutlinePlus />
-        </span>
+        </span> */}
     </div>
     );
     }
