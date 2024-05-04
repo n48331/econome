@@ -1,5 +1,5 @@
 "use client"
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Popup from "./components/common/Popup";
 import ActionCard from "./components/Dashboard/ActionCard";
 import BalaceCard from "./components/Dashboard/BalaceCard";
@@ -23,13 +23,13 @@ export default function Home() {
     image: "/docs/images/people/profile-picture-1.jpg",
   });
   const [data, setData] = useState<any>([]);
+  const [isLoading, setIsLoading] = useState(true); // New state variable for loading
 
   useEffect(() => {
     getData().then((res) => {
       setData(res);
-    }
-    );
-   
+      setIsLoading(false); // Set loading state to false once data is fetched
+    });
   }, []);
 
   const handleAddTransaction = () => {
@@ -54,29 +54,30 @@ export default function Home() {
     });
   };
 
-
-
-
-
-
   return (
     <main className="flex gap-5 flex-col items-center p-5 justify-center ">
-      <Popup
-        isModalOpen={isIncomeModalOpen || isExpenseModalOpen}
-        setIsModalOpen={isIncomeModalOpen ? setIsIncomeModalOpen : setIsExpenseModalOpen}
-        title={isIncomeModalOpen ? "Transfer" : "Deposited"}
-        formData={formData}
-        setFormData={setFormData}
-        handleAddTransaction={handleAddTransaction}
-      />
-      <BalaceCard balance={data.balance} count={data.trans}/>
-      <div className="flex gap-5 justify-between w-full">
-        <ActionCard title="Transfer" amount={data.total} icon="💰" onClick={() => setIsIncomeModalOpen(true)} color={"b1d1d8"} />
-        <ActionCard title="Deposited" amount={data.deposited} icon="💰" onClick={() => setIsExpenseModalOpen(true)} color={"efdac7"} />
-      </div>
-      <div className="w-full">
-        <RecentTrans data={data.transData?.slice().reverse()} />
-      </div>
+      {isLoading ? (
+        <div>Loading...</div> // Show loading state
+      ) : (
+        <>
+          <Popup
+            isModalOpen={isIncomeModalOpen || isExpenseModalOpen}
+            setIsModalOpen={isIncomeModalOpen ? setIsIncomeModalOpen : setIsExpenseModalOpen}
+            title={isIncomeModalOpen ? "Transfer" : "Deposited"}
+            formData={formData}
+            setFormData={setFormData}
+            handleAddTransaction={handleAddTransaction}
+          />
+          <BalaceCard balance={data.balance} count={data.trans} />
+          <div className="flex gap-5 justify-between w-full">
+            <ActionCard title="Transfer" amount={data.total} icon="💰" onClick={() => setIsIncomeModalOpen(true)} color={"b1d1d8"} />
+            <ActionCard title="Deposited" amount={data.deposited} icon="💰" onClick={() => setIsExpenseModalOpen(true)} color={"efdac7"} />
+          </div>
+          <div className="w-full">
+            <RecentTrans data={data.transData?.slice().reverse()} />
+          </div>
+        </>
+      )}
     </main>
   );
 }
