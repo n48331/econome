@@ -33,7 +33,7 @@ const AddTask = ({ isModalOpen, setIsModalOpen,title ,formData, setFormData,hand
 
             {isModalOpen && (
                 <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
-                    <div style={{backgroundColor: title=='Income' ? '#b1d1d8': '#efdac7'}} className="mt-5 bg-white rounded-lg shadow p-5 w-3/4 relative">
+                    <div style={{backgroundColor: title=='Deposited' ? '#efdac7':'#b1d1d8'}} className="mt-5 bg-white rounded-lg shadow p-5 w-3/4 relative">
                     <span onClick={closeModal} className=" absolute right-1 top-1 text-[35px]"><IoClose/></span>
                         <h2 className="font-bold py-3">Add {title}</h2>
                         <form className="flex flex-col gap-2">
