@@ -20,10 +20,14 @@ export default function Home() {
   });
 
   useEffect(() => {
-    getData().then((res) => {
-      setData(res);
-      setLoading(false);
-    });
+    const interval = setInterval(() => {
+      getData().then((res) => {
+        setData(res);
+        setLoading(false);
+      });
+    }, 3000);
+
+    return () => clearInterval(interval);
   }, []);
 
   const handleAddTransaction = async () => {
@@ -55,10 +59,10 @@ export default function Home() {
           setFormData={setFormData}
           handleAddTransaction={handleAddTransaction}
         />
-        <BalaceCard balance={data.balance} count={data.trans} />
+        <BalaceCard balance={data.balance} count={data.trans} loading={loading}/>
         <div className="flex gap-5 justify-between w-full">
-          <ActionCard title="Transfered" amount={data.total} icon="💰" onClick={() => setIsIncomeModalOpen(true)} color={"b1d1d8"} />
-          <ActionCard title="Deposited" amount={data.deposited} icon="💰" onClick={() => setIsExpenseModalOpen(true)} color={"efdac7"} />
+          <ActionCard title="Transfered" amount={data.total} icon="💰" onClick={() => setIsIncomeModalOpen(true)} color={"b1d1d8"} loading={loading}/>
+          <ActionCard title="Deposited" amount={data.deposited} icon="💰" onClick={() => setIsExpenseModalOpen(true)} color={"efdac7"} loading={loading}/>
         </div>
         <div className="w-full">
           <RecentTrans data={data.transData?.slice().reverse()} limit={10} title={'Recent transactions'} />
