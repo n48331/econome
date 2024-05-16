@@ -7,6 +7,7 @@ import RecentTrans from "./components/Dashboard/RecentTrans";
 import { getData, postData } from "@/api/sheets";
 
 
+
 export default function Home() {
   const [isIncomeModalOpen, setIsIncomeModalOpen] = useState(false);
   const [isExpenseModalOpen, setIsExpenseModalOpen] = useState(false);
@@ -25,7 +26,7 @@ export default function Home() {
         setData(res);
         setLoading(false);
       });
-    }, 3000);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, []);
@@ -60,12 +61,14 @@ export default function Home() {
           handleAddTransaction={handleAddTransaction}
         />
         <BalaceCard balance={data.balance} count={data.trans} loading={loading}/>
+       
         <div className="flex gap-5 justify-between w-full">
           <ActionCard title="Transfered" amount={data.total} icon="💰" onClick={() => setIsIncomeModalOpen(true)} color={"b1d1d8"} loading={loading}/>
           <ActionCard title="Deposited" amount={data.deposited} icon="💰" onClick={() => setIsExpenseModalOpen(true)} color={"efdac7"} loading={loading}/>
         </div>
         <div className="w-full">
-          <RecentTrans data={data.transData?.slice().reverse()} limit={10} title={'Recent transactions'} />
+          
+          <RecentTrans data={data.transData?.slice().reverse()} limit={10} title={'Recent transactions'} count={data.trans}/>
         </div>
       </>
 
